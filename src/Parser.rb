@@ -1,3 +1,5 @@
+require_relative 'Graph.rb'
+require_relative 'Vertex.rb'
 
 class Parser
   attr_reader :input, :graphs_no, :type
@@ -30,6 +32,10 @@ class Parser
         puts "======================================================="
         puts "Graph #{graph} ::: contains #{lines[lineno]} records"
       end
+      
+      current_graph = Graph.new
+
+
       records = lines[lineno].to_i
       
       # Go through records in one graph
@@ -64,7 +70,3 @@ class Parser
 
   end
 end
-
-parser = Parser.new
-parser.readInput
-parser.parseInput
