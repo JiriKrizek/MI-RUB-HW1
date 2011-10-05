@@ -26,30 +26,33 @@ class Parser
 
     # Go through graphs
     (1..@graphs_no).each do |graph|
-      puts "======================================================="
-      puts "Graph #{graph}, lineno: #{lineno} ::: #{lines[lineno]}"
+      if DEBUG
+        puts "======================================================="
+        puts "Graph #{graph} ::: contains #{lines[lineno]} records"
+      end
       records = lines[lineno].to_i
-      puts "  Records #{records}"
       
       # Go through records in one graph
       start = lineno-1
       (lineno..lineno+records-1).each do |line|
         lineno += 1
-        puts "    Record: #{line-start}: #{lines[lineno]}"
+        puts "    Record: #{line-start}: #{lines[lineno]}" if DEBUG
       end
 
       lineno+=1
 
-      puts ""
+      puts "" if DEBUG
 
       # Go through search requests
       while !lines[lineno].eql?("0 0")
         num = lines[lineno].split(" ")
-        print "    Search: #{num[0]} using "
-        if(num[1].to_i==0)
-          puts "DFS"
-        else 
-          puts "BFS"
+        print "    Search: #{num[0]} using " if DEBUG
+        if DEBUG
+          if(num[1].to_i==0)
+            puts "DFS"
+          else 
+            puts "BFS"
+          end
         end
 
         lineno+=1
