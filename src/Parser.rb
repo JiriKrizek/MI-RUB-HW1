@@ -33,7 +33,7 @@ class Parser
         puts "Graph #{graph} ::: contains #{lines[lineno]} records"
       end
       
-      current_graph = Graph.new
+      current_graph = Graph.new(lines[lineno].to_i)
 
 
       records = lines[lineno].to_i
@@ -42,7 +42,12 @@ class Parser
       start = lineno-1
       (lineno..lineno+records-1).each do |line|
         lineno += 1
-        puts "    Record: #{line-start}: #{lines[lineno]}" if DEBUG
+        #puts "    Record: #{line-start}: #{lines[lineno]}" if DEBUG
+        record = lines[lineno].split
+        puts "    Vertice #{record[0]}"
+        (1..record.length-1).each do |i|
+          current_graph.connectVertices(record[0].to_i, record[i].to_i)
+        end
       end
 
       lineno+=1
