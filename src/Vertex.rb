@@ -1,5 +1,6 @@
 class Vertex
-  attr_reader :status, :connections
+  attr_reader :connections
+  attr_accessor :status
   :st_open
   :st_close
   :st_fresh

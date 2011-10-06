@@ -1,8 +1,11 @@
 require_relative 'Graph.rb'
 require_relative 'Vertex.rb'
+require_relative 'SearchRequest.rb'
 
 class Parser
   attr_reader :input, :graphs_no, :type
+  :DFS
+  :BFS
 
   @@DEBUG = TRUE
 
@@ -30,6 +33,7 @@ class Parser
     lineno+=1
     puts "Graphs # set to #{@graphs_no}" if Parser.DEBUG
 
+    graphs = []
     # Go through graphs
     (1..@graphs_no).each do |graph|
       if Parser.DEBUG
@@ -61,21 +65,20 @@ class Parser
       # Go through search requests
       while !lines[lineno].eql?("0 0")
         num = lines[lineno].split(" ")
-        print "    Search: #{num[0]} using " if Parser.DEBUG
         if Parser.DEBUG
           if(num[1].to_i==0)
-            puts "DFS"
+            current_graph.addSearchRequest(SearchRequest.new(num[0], :DFS))
           else 
-            puts "BFS"
+            current_graph.addSearchRequest(SearchRequest.new(num[0], :BFS))
           end
         end
 
         lineno+=1
       end
       lineno+=1
+
+      graphs.push(current_graph)
     end
-
-
-
+    graphs  
   end
 end
