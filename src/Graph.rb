@@ -3,10 +3,13 @@ class Graph
 
   def initialize(vertices_count)
     @vertices = Hash.new
+    for i in 1..vertices_count 
+      @vertices[i] = Vertex.new()
+    end
   end
 
   def to_s
-    puts "Graph contains #{@vertices} vertices"
+    puts "Graph contains vertices: #{@vertices}"
   end
 
   def connectVertices(i, j)
@@ -15,7 +18,6 @@ class Graph
       puts "      Vertices [#{i}] is null, creating new array"
       vertices[i] = []
     end
-    vertices[i] << j
-    puts "      Adding #{j}"
+    vertices[i].addConnection j
   end
 end

@@ -4,8 +4,12 @@ require_relative 'Vertex.rb'
 class Parser
   attr_reader :input, :graphs_no, :type
 
-  DEBUG=true
-  
+  @@DEBUG = TRUE
+
+  def self.DEBUG
+    @@DEBUG
+  end
+
   def initialize
     @input = ''
     graphs_no = 0
@@ -15,7 +19,7 @@ class Parser
     while a = gets
       @input += a
     end
-    puts @input if DEBUG
+    puts @input if Parser.DEBUG
   end
 
   def parseInput
@@ -24,11 +28,11 @@ class Parser
 
     @graphs_no = lines[lineno].to_i
     lineno+=1
-    puts "Graphs # set to #{@graphs_no}" if DEBUG
+    puts "Graphs # set to #{@graphs_no}" if Parser.DEBUG
 
     # Go through graphs
     (1..@graphs_no).each do |graph|
-      if DEBUG
+      if Parser.DEBUG
         puts "======================================================="
         puts "Graph #{graph} ::: contains #{lines[lineno]} records"
       end
@@ -44,7 +48,7 @@ class Parser
         lineno += 1
         #puts "    Record: #{line-start}: #{lines[lineno]}" if DEBUG
         record = lines[lineno].split
-        puts "    Vertice #{record[0]}"
+        puts "    Vertice #{record[0]}" if Parser.DEBUG
         (1..record.length-1).each do |i|
           current_graph.connectVertices(record[0].to_i, record[i].to_i)
         end
@@ -52,13 +56,13 @@ class Parser
 
       lineno+=1
 
-      puts "" if DEBUG
+      puts "" if Parser.DEBUG
 
       # Go through search requests
       while !lines[lineno].eql?("0 0")
         num = lines[lineno].split(" ")
-        print "    Search: #{num[0]} using " if DEBUG
-        if DEBUG
+        print "    Search: #{num[0]} using " if Parser.DEBUG
+        if Parser.DEBUG
           if(num[1].to_i==0)
             puts "DFS"
           else 
