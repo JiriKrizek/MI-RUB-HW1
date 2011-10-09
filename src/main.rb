@@ -1,6 +1,24 @@
 require_relative 'Parser.rb'
 require 'thread'
 
+def DFS(graph, source) 
+  source.status = :st_close
+  print "#{source.value} "
+
+  source.connections.each { |connection|
+    vertex = graph.getVertex(connection[0])
+
+    if(vertex.status == :st_fresh)
+      vertex.status = :st_open
+      vertex.connections.each { |c|
+        v = graph.getVertex(c[0])
+        DFS(graph, v) if v.status == :st_fresh
+      }
+      vertex.status = :st_close
+    end
+  }  
+end
+
 def BFS(graph, source) 
   source.status=:st_open
 
@@ -35,9 +53,11 @@ graphs.each { |graph|
   i+=1
   graph.search_requests.each { |request|
     if(request.type==:BFS) 
-      BFS(graph, graph.getVertex(request.number.to_i))
+      #BFS(graph, graph.getVertex(request.number.to_i))
     else
-      #DFS(graph, graph.getVertex(request.number.to_i))
+      DFS(graph, graph.getVertex(request.number.to_i))
+      puts ""
+      graph.refresh
     end
   }
 }
