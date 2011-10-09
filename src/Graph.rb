@@ -4,9 +4,15 @@ class Graph
   def initialize(vertices_count)
     @vertex = Hash.new
     for i in 1..vertices_count 
-      @vertex[i] = Vertex.new()
+      @vertex[i] = Vertex.new(i)
     end
     @search_requests = []
+  end
+
+  def refresh
+    @vertex.each { |v|
+      v[1].status=:st_fresh
+    }
   end
 
   def to_s
